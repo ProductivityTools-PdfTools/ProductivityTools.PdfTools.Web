@@ -1,0 +1,42 @@
+
+/* Menu container */
+.menu {
+    list-style-type: none;
+    /* Removes default bullet points */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Contains the floated list items */
+    background-color: #f1f1f1;
+    /* Optional: background color for the menu */
+    margin-bottom: 10px;
+    /* Space below the menu */
+}
+
+/* Menu items */
+.menu-item {
+    float: left;
+    /* Makes list items align horizontally */
+}
+
+/* Links within menu items (optional, but good for styling) */
+.menu-item a {
+    display: block;
+    /* Makes the entire area clickable */
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    /* Removes underline from links */
+}
+
+.menu-item a:hover {
+    background-color: #ddd;
+    /* Optional: hover effect */
+}
+
+
+.menu-item:has(> .active) {
+    color: white;
+    background-color: lightskyblue;
+}
