@@ -4,6 +4,8 @@
 ```
 npm install -g @angular/cli
 ng new my-angular-project
+ng generate component home/home
+ ng generate component tools/merge-odd-even-files 
 ```
 
 ## Development server
