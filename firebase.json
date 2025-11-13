@@ -1,6 +1,7 @@
 {
   "hosting": {
-    "public": "public",
+    "site": "pt-pdf-tools",
+    "public": "dist/ProductivityTools.PdfTools.Web/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
