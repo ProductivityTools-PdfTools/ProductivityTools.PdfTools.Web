@@ -14,6 +14,13 @@ ng generate component home/home
 ng serve --open
 ```
 
+## fireabse
+```
+fireabase init
+Hosting for static web pages
+Configure single page application - no
+```
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

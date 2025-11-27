@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HomeService } from '../home.service';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './home.css',
 })
 export class Home {
+  constructor(private homeService: HomeService) { }
 
+  name: string = "pawel"
+
+  ngOnInit(): void {
+    this.homeService.sayHello("pawel").subscribe((result: any) => {
+      this.name = result.data.Hello;
+      console.log(this.name);
+    });
+  }
 }
