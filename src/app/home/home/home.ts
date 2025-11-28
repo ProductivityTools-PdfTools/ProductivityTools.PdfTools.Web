@@ -10,12 +10,19 @@ import { HomeService } from '../home.service';
 export class Home {
   constructor(private homeService: HomeService) { }
 
-  name: string = "pawel"
+  name: string = "Gosia"
 
   ngOnInit(): void {
-    this.homeService.sayHello("pawel").subscribe((result: any) => {
-      this.name = result.data.Hello;
-      console.log(this.name);
+    console.log('Home Component Initialized');
+    this.homeService.sayHello("paweld").subscribe({
+      next: (result: any) => {
+        debugger;;
+        console.log('GraphQL Response:', result);
+        this.name = result.data.Hello;
+      },
+      error: (error: any) => {
+        console.error('GraphQL Error:', error);
+      }
     });
   }
 }
