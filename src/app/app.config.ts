@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
       const httpLink = inject(HttpLink);
       return {
         link: httpLink.create({
-          uri: isDevMode() ? 'http://localhost:8080/graphql' : 'https://pt-pdftools-93484780890.europe-west1.run.app/graphql'
+          uri: isDevMode() ? 'http://localhost:8080/graphql' : 'https://pt-pdf-tools-api-93484780890.europe-west1.run.app/graphql'
         }),
         cache: new InMemoryCache(),
       };
