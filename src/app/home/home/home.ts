@@ -10,7 +10,7 @@ import { HomeService } from '../home.service';
 export class Home {
   constructor(private homeService: HomeService) { }
 
-  name: string = "server did not respond"
+  name: string = "server did not respondg"
 
   ngOnInit(): void {
     console.log('Home Component Initialized');

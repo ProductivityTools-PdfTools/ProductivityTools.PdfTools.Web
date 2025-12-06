@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, inject } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, inject, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideApollo } from 'apollo-angular';
@@ -17,7 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideApollo(() => {
       const httpLink = inject(HttpLink);
       return {
-        link: httpLink.create({ uri: 'http://localhost:8080/graphql' }),
+        link: httpLink.create({
+          uri: isDevMode() ? 'http://localhost:8080/graphql' : 'https://pt-pdftools-93484780890.europe-west1.run.app/graphql'
+        }),
         cache: new InMemoryCache(),
       };
     }),
