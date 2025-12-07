@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { HomeService } from '../home.service';
 
 @Component({
@@ -8,17 +8,19 @@ import { HomeService } from '../home.service';
   styleUrl: './home.css',
 })
 export class Home {
-  constructor(private homeService: HomeService) { }
+  constructor(private homeService: HomeService, private cdr: ChangeDetectorRef) { }
 
-  name: string = "server did not respondg"
+  name: string = "server did not respond"
 
   ngOnInit(): void {
     console.log('Home Component Initialized');
     this.homeService.sayHello("paweld").subscribe({
       next: (result: any) => {
-        debugger;;
         console.log('GraphQL Response:', result);
-        this.name = result.data.Hello;
+        if (result.data && result.data.Hello) {
+          this.name = result.data.Hello;
+          this.cdr.detectChanges();
+        }
       },
       error: (error: any) => {
         console.error('GraphQL Error:', error);
