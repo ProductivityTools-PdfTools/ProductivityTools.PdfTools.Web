@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, signal } from '@angular/core';
 import { HomeService } from '../home.service';
 
 @Component({
@@ -40,8 +40,8 @@ export class Home {
     this.file2 = event.target.files[0];
   }
 
-  uploadFiles() {
-    this.homeService.uploadFiles(this.file1, this.file2).subscribe({
+  mergeFiles() {
+    this.homeService.mergeFiles(this.file1(), this.file2).subscribe({
       next: (result: any) => {
         console.log('GraphQL Response:', result);
         if (result.data && result.data.UploadFiles) {
