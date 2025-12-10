@@ -33,25 +33,32 @@ export class Home {
   }
 
   onFile1Selected(event: any) {
-    this.file1 = event.target.files[0];
+    this.file1.set(event.target.files[0]);
   }
 
   onFile2Selected(event: any) {
-    this.file2 = event.target.files[0];
+    this.file2.set(event.target.files[0]);
   }
 
   mergeFiles() {
-    this.homeService.mergeFiles(this.file1(), this.file2).subscribe({
-      next: (result: any) => {
-        console.log('GraphQL Response:', result);
-        if (result.data && result.data.UploadFiles) {
-          this.name = result.data.UploadFiles;
-          this.cdr.detectChanges();
+    const f1 = this.file1();
+    const f2 = this.file2();
+
+    if (f1 && f2) {
+      this.homeService.mergeFiles(f1, f2).subscribe({
+        next: (result: any) => {
+          console.log('GraphQL Response:', result);
+          if (result.data && result.data.UploadFiles) {
+            this.name = result.data.UploadFiles;
+            this.cdr.detectChanges();
+          }
+        },
+        error: (error: any) => {
+          console.error('GraphQL Error:', error);
         }
-      },
-      error: (error: any) => {
-        console.error('GraphQL Error:', error);
-      }
-    });
+      });
+    } else {
+      console.error('Files not selected');
+    }
   }
 }

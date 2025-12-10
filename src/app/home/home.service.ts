@@ -26,6 +26,9 @@ export class HomeService {
       variables: {
         file1: file1,
         file2: file2
+      },
+      context: {
+        useMultipart: true
       }
     })
   }
