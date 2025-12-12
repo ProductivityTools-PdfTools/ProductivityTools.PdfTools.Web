@@ -17,7 +17,7 @@ export class ToolsService {
     formData.append('file1', file1);
     formData.append('file2', file2);
 
-    const req = new HttpRequest('POST', 'http://localhost:8080/api/merge-files', formData, {
+    const req = new HttpRequest('POST', 'http://localhost:8080/api/merge-odd-even-pages', formData, {
       reportProgress: true, // Set to true to track upload percentage
       responseType: 'json'
     });

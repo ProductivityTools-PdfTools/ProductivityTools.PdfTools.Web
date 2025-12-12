@@ -19,17 +19,4 @@ export class HomeService {
       }
     })
   }
-
-  mergeFiles(file1: File, file2: File): Observable<any> {
-    return this.apollo.mutate({
-      mutation: MERGE_FILES,
-      variables: {
-        file1: file1,
-        file2: file2
-      },
-      context: {
-        useMultipart: true
-      }
-    })
-  }
 }
