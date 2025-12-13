@@ -2,8 +2,8 @@
 <div>
     <div> Multifile upload</div>
     Plik1:
-    <input type="file" (change)="onFile1Selected($event)" />
+    <input type="file" (change)="onFile1Selected($event)" accept=".pdf,application/pdf" />
     Plik2:
-    <input type="file" (change)="onFile2Selected($event)" />
+    <input type="file" (change)="onFile2Selected($event)" accept=".pdf,application/pdf" />
     <button (click)="mergeFiles()">Merge</button>
 </div>
