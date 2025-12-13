@@ -19,7 +19,7 @@ export class ToolsService {
 
     const req = new HttpRequest('POST', 'http://localhost:8080/api/merge-odd-even-pages', formData, {
       reportProgress: true, // Set to true to track upload percentage
-      responseType: 'json'
+      responseType: 'blob'
     });
 
     return this.http.request(req);

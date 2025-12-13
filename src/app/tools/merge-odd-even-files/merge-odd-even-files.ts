@@ -28,7 +28,13 @@ export class MergeOddEvenFiles {
       this.toolsService.mergeFiles(f1, f2).subscribe({
         next: (result: any) => {
           console.log('GraphQL Response:', result);
-
+          const blob = result.body;
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'merged.pdf';
+          a.click();
+          URL.revokeObjectURL(url);
         },
         error: (error: any) => {
           console.error('GraphQL Error:', error);
