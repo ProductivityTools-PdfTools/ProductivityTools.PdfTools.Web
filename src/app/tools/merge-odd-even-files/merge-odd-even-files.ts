@@ -27,7 +27,7 @@ export class MergeOddEvenFiles {
     if (f1 && f2) {
       this.toolsService.mergeFiles(f1, f2).subscribe({
         next: (result: any) => {
-          console.log('GraphQL Response:', result);
+          console.log('Response:', result);
           const blob = result.body;
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');

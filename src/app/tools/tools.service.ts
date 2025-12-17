@@ -24,4 +24,14 @@ export class ToolsService {
 
     return this.http.request(req);
   }
+
+  reversePagesInFile(file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    const req = new HttpRequest('POST', 'http://localhost:8080/api/reverse-pages-in-file', formData, {
+      reportProgress: true,
+      responseType: 'blob'
+    });
+    return this.http.request(req);
+  }
 }
