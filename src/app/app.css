@@ -1,42 +1,33 @@
-
 /* Menu container */
 .menu {
     list-style-type: none;
-    /* Removes default bullet points */
     margin: 0;
-    padding: 0;
-    overflow: hidden;
-    /* Contains the floated list items */
-    background-color: #f1f1f1;
-    /* Optional: background color for the menu */
-    margin-bottom: 10px;
-    /* Space below the menu */
+    padding: 0.75rem 2rem;
+    background: var(--surface-color);
+    display: flex;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
-/* Menu items */
-.menu-item {
-    float: left;
-    /* Makes list items align horizontally */
-}
-
-/* Links within menu items (optional, but good for styling) */
 .menu-item a {
     display: block;
-    /* Makes the entire area clickable */
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
+    color: var(--text-secondary);
     text-decoration: none;
-    /* Removes underline from links */
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
 }
 
 .menu-item a:hover {
-    background-color: #ddd;
-    /* Optional: hover effect */
+    background-color: #f1f5f9;
+    color: var(--text-primary);
 }
 
-
-.menu-item:has(> .active) {
+.menu-item a.active {
+    background: var(--primary-gradient);
     color: white;
-    background-color: lightskyblue;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
 }

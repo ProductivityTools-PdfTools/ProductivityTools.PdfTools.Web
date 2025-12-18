@@ -37,7 +37,7 @@ export class MergeOddEvenFiles {
           URL.revokeObjectURL(url);
         },
         error: (error: any) => {
-          console.error('GraphQL Error:', error);
+          console.error('Error:', error);
         }
       });
     } else {

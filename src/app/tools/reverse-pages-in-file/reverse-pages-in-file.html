@@ -1,7 +1,13 @@
-<p>reverse-pages-in-file works!</p>
-<div>
-    <div> Multifile upload</div>
-    Plik1:
-    <input type="file" (change)="onFileSelected($event)" accept=".pdf,application/pdf" />
-    <button (click)="reversePagesInFile()">Reverse</button>
+<div class="tool-card">
+    <div class="tool-header">
+        <h2>Reverse PDF Pages</h2>
+        <p>Invert the order of pages in your PDF document.</p>
+    </div>
+
+    <div class="form-group">
+        <label for="pdfFile">Select PDF File</label>
+        <input id="pdfFile" type="file" (change)="onFileSelected($event)" accept=".pdf,application/pdf" />
+    </div>
+
+    <button class="primary-button" (click)="reversePagesInFile()">Reverse Pages</button>
 </div>

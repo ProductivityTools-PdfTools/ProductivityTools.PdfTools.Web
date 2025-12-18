@@ -1,9 +1,18 @@
-<p>merge-odd-even-files works!</p>
-<div>
-    <div> Multifile upload</div>
-    Plik1:
-    <input type="file" (change)="onFile1Selected($event)" accept=".pdf,application/pdf" />
-    Plik2:
-    <input type="file" (change)="onFile2Selected($event)" accept=".pdf,application/pdf" />
-    <button (click)="mergeFiles()">Merge</button>
+<div class="tool-card">
+    <div class="tool-header">
+        <h2>Merge PDF Files</h2>
+        <p>Combine two PDFs (odd and even pages) into a single document.</p>
+    </div>
+
+    <div class="form-group">
+        <label for="file1">Odd Pages File (1, 3, 5...)</label>
+        <input id="file1" type="file" (change)="onFile1Selected($event)" accept=".pdf,application/pdf" />
+    </div>
+
+    <div class="form-group">
+        <label for="file2">Even Pages File (2, 4, 6...)</label>
+        <input id="file2" type="file" (change)="onFile2Selected($event)" accept=".pdf,application/pdf" />
+    </div>
+
+    <button class="primary-button" (click)="mergeFiles()">Merge Files</button>
 </div>
