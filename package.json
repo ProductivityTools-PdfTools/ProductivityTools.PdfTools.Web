@@ -35,6 +35,7 @@
     "apollo-angular": "^13.0.0",
     "express": "^5.2.1",
     "extract-files": "^8.1.0",
+    "firebase": "^12.7.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
