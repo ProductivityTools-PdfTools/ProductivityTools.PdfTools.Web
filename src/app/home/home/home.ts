@@ -14,7 +14,7 @@ export class Home {
 
   ngOnInit(): void {
     console.log('Home Component Initialized');
-    this.homeService.sayHello("paweld").subscribe({
+    this.homeService.sayHello("Pawel").subscribe({
       next: (result: any) => {
         console.log('GraphQL Response:', result);
         if (result.data && result.data.Hello) {

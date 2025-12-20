@@ -31,3 +31,16 @@
     color: white;
     box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
 }
+
+.logout-container {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-name {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
