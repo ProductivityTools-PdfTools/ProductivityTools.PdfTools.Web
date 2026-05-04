@@ -26,15 +26,21 @@ export class MergeOddEvenFiles {
 
     if (f1 && f2) {
       this.toolsService.mergeFiles(f1, f2).subscribe({
-        next: (result: any) => {
-          console.log('Response:', result);
-          const blob = result.body;
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'merged.pdf';
-          a.click();
-          URL.revokeObjectURL(url);
+        next: (event: any) => {
+          if (event.type === 4) { // HttpResponse
+            console.log('Response finished');
+            const blob = event.body;
+            if (blob) {
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'merged.pdf';
+              a.click();
+              URL.revokeObjectURL(url);
+            }
+          } else {
+            console.log('Progress/Other Event:', event);
+          }
         },
         error: (error: any) => {
           console.error('Error:', error);

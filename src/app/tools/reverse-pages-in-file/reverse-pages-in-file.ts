@@ -21,15 +21,21 @@ export class ReversePagesInFile {
     const f = this.file();
     if (f) {
       this.toolsService.reversePagesInFile(f).subscribe({
-        next: (result: any) => {
-          console.log('Response:', result);
-          const blob = result.body;
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'reversed.pdf';
-          a.click();
-          URL.revokeObjectURL(url);
+        next: (event: any) => {
+          if (event.type === 4) { // HttpResponse
+            console.log('Response finished');
+            const blob = event.body;
+            if (blob) {
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'reversed.pdf';
+              a.click();
+              URL.revokeObjectURL(url);
+            }
+          } else {
+            console.log('Progress/Other Event:', event);
+          }
         },
         error: (error: any) => {
           console.error('Error:', error);
