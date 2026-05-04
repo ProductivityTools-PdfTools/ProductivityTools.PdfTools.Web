@@ -1,6 +1,7 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_URL } from '../app.config';
 
 export interface HelloResponse {
   message: string;
@@ -10,17 +11,14 @@ export interface HelloResponse {
   providedIn: 'root',
 })
 export class HomeService {
-  private readonly uri = isDevMode()
-    ? 'http://localhost:8080/api/'
-    : 'https://pt-pdf-tools-api-93484780890.europe-west1.run.app/api/';
-
-  constructor(private http: HttpClient) { }
+  private readonly apiUrl = inject(API_URL);
+  private readonly http = inject(HttpClient);
 
   sayHello(name: string): Observable<HelloResponse> {
-    return this.http.post<HelloResponse>(`${this.uri}hello`, { name });
+    return this.http.post<HelloResponse>(`${this.apiUrl}hello`, { name });
   }
 
   sayHelloWorld(): Observable<HelloResponse> {
-    return this.http.get<HelloResponse>(`${this.uri}hello-world`);
+    return this.http.get<HelloResponse>(`${this.apiUrl}hello-world`);
   }
 }
