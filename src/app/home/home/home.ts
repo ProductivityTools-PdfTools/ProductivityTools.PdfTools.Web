@@ -1,4 +1,6 @@
-import { Component, ChangeDetectorRef, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 import { HomeService } from '../home.service';
 
 @Component({
@@ -8,23 +10,15 @@ import { HomeService } from '../home.service';
   styleUrl: './home.css',
 })
 export class Home {
-  constructor(private homeService: HomeService, private cdr: ChangeDetectorRef) { }
+  private homeService = inject(HomeService);
 
-  name: string = "server did not respond"
+  name = toSignal(
+    this.homeService.sayHello('Pawel').pipe(map((r) => r.message)),
+    { initialValue: 'loading...' }
+  );
 
-  ngOnInit(): void {
-    console.log('Home Component Initialized');
-    this.homeService.sayHello("Pawel").subscribe({
-      next: (result: any) => {
-        console.log('GraphQL Response:', result);
-        if (result.data && result.data.Hello) {
-          this.name = result.data.Hello;
-          this.cdr.detectChanges();
-        }
-      },
-      error: (error: any) => {
-        console.error('GraphQL Error:', error);
-      }
-    });
-  }
+  helloworld = toSignal(
+    this.homeService.sayHelloWorld().pipe(map((r) => r.message)),
+    { initialValue: 'loading...' }
+  );
 }
