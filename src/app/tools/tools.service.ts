@@ -26,6 +26,7 @@ export class ToolsService {
   }
 
   reversePagesInFile(file: File): Observable<any> {
+    console.log('this.apiUrl', this.apiUrl);
     const formData: FormData = new FormData();
     formData.append('file', file);
     const req = new HttpRequest('POST', `${this.apiUrl}reverse-pages-in-file`, formData, {
