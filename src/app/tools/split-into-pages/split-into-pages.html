@@ -1,1 +1,13 @@
-<p>split-into-pages works!</p>
+<div class="tool-card">
+    <div class="tool-header">
+        <h2>Reverse PDF Pages</h2>
+        <p>Invert the order of pages in your PDF document.</p>
+    </div>
+
+    <div class="form-group">
+        <label for="pdfFile">Select PDF File</label>
+        <input id="pdfFile" type="file" (change)="onFileSelected($event)" accept=".pdf,application/pdf" />
+    </div>
+
+    <button class="primary-button" (click)="splitPages()">Split Into Pages</button>
+</div>

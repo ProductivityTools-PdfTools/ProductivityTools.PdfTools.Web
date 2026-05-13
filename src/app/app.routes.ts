@@ -20,5 +20,10 @@ export const routes: Routes = [
         path: 'reverse-pages-in-file',
         loadComponent: () => import('./tools/reverse-pages-in-file/reverse-pages-in-file').then(m => m.ReversePagesInFile),
         canActivate: [authGuard]
+    },
+    {
+        path: 'split-into-pages',
+        loadComponent: () => import('./tools/split-into-pages/split-into-pages').then(m => m.SplitIntoPages),
+        canActivate: [authGuard]
     }
 ];

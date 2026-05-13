@@ -35,4 +35,15 @@ export class ToolsService {
     });
     return this.http.request(req);
   }
+
+  splitPages(file: File): Observable<any> {
+    console.log('this.apiUrl', this.apiUrl);
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    const req = new HttpRequest('POST', `${this.apiUrl}split-into-pages`, formData, {
+      reportProgress: true,
+      responseType: 'blob'
+    });
+    return this.http.request(req);
+  }
 }
