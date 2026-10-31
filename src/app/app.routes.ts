@@ -25,5 +25,10 @@ export const routes: Routes = [
         path: 'split-into-pages',
         loadComponent: () => import('./tools/split-into-pages/split-into-pages').then(m => m.SplitIntoPages),
         canActivate: [authGuard]
+    },
+    {
+        path: 'images-to-pdf',
+        loadComponent: () => import('./tools/images-to-pdf/images-to-pdf').then(m => m.ImagesToPdf),
+        canActivate: [authGuard]
     }
 ];

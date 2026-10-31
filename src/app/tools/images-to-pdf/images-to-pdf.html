@@ -1,0 +1,39 @@
+<div class="tool-card">
+    <div class="tool-header">
+        <h2>Images to PDF</h2>
+        <p>Combine images into a single PDF. Each image becomes a separate page.</p>
+    </div>
+
+    <div class="form-group">
+        <label for="imageFiles">Select Images (JPG, PNG, GIF, BMP)</label>
+        <input id="imageFiles" type="file" multiple (change)="onFilesSelected($event)"
+            accept=".jpg,.jpeg,.png,.gif,.bmp,image/jpeg,image/png,image/gif,image/bmp" />
+    </div>
+
+    @if (files().length > 0) {
+    <div class="form-group">
+        <label>Pages ({{ files().length }})</label>
+        <ol class="file-list">
+            @for (file of files(); track $index; let i = $index, first = $first, last = $last) {
+            <li class="file-item">
+                <span class="file-name" [title]="file.name">{{ i + 1 }}. {{ file.name }}</span>
+                <span class="file-actions">
+                    <button type="button" (click)="moveUp(i)" [disabled]="first" title="Move up">&#8593;</button>
+                    <button type="button" (click)="moveDown(i)" [disabled]="last" title="Move down">&#8595;</button>
+                    <button type="button" (click)="remove(i)" title="Remove">&#10005;</button>
+                </span>
+            </li>
+            }
+        </ol>
+        <button type="button" class="link-button" (click)="clear()">Clear all</button>
+    </div>
+    }
+
+    @if (error()) {
+    <p class="error">{{ error() }}</p>
+    }
+
+    <button class="primary-button" (click)="convert()" [disabled]="files().length === 0 || inProgress()">
+        {{ inProgress() ? 'Converting...' : 'Convert to PDF' }}
+    </button>
+</div>
