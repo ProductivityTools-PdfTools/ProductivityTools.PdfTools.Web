@@ -1,15 +1,15 @@
 <div class="tool-card">
     <div class="tool-header">
-        <h2>Files to PDF</h2>
-        <p>Convert Word documents (.doc, .docx) to PDF. All PDFs are downloaded together in one ZIP file.</p>
+        <h2>{{ config.title }}</h2>
+        <p>{{ config.description }}</p>
     </div>
 
     <label class="drop-zone" [class.drag-over]="dragOver()" (dragover)="onDragOver($event)"
         (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
         <input type="file" multiple hidden (click)="pickFiles($event)" (change)="onFilesSelected($event)"
-            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            [accept]="config.accept" />
         <span class="drop-icon">&#x2B07;</span>
-        <span class="drop-title">Drag &amp; drop .doc / .docx files here</span>
+        <span class="drop-title">Drag &amp; drop {{ config.formats }} files here</span>
         <span class="drop-hint">or click to choose files</span>
     </label>
 

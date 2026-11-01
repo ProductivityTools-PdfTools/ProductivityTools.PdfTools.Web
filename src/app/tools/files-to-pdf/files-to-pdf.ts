@@ -1,10 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { ToolsService } from '../tools.service';
-import { FileAccessService, WORD_TYPES, ZIP_TYPES } from '../file-access.service';
+import { FileAccessService, ZIP_TYPES } from '../file-access.service';
+import { ConversionConfig, WORD_CONVERSION } from './conversion-config';
 
-const SUPPORTED_EXTENSIONS = ['doc', 'docx'];
-
+/**
+ * Converts every dropped/selected file to its own PDF and downloads them as a ZIP.
+ * Used by "Files to PDF" (Word) and "Images to PDF" – see conversion-config.ts.
+ */
 @Component({
   selector: 'app-files-to-pdf',
   imports: [],
@@ -15,6 +19,8 @@ export class FilesToPdf {
   constructor(private toolsService: ToolsService) { }
 
   private readonly fileAccess = inject(FileAccessService);
+
+  readonly config: ConversionConfig = inject(ActivatedRoute).snapshot.data['conversion'] ?? WORD_CONVERSION;
 
   files = signal<File[]>([]);
   dragOver = signal(false);
@@ -36,7 +42,7 @@ export class FilesToPdf {
   async onDrop(event: DragEvent) {
     event.preventDefault();
     this.dragOver.set(false);
-    // Keeps file handles (Chrome/Edge) so the ZIP can be saved next to the documents.
+    // Keeps file handles (Chrome/Edge) so the ZIP can be saved next to the source files.
     this.addFiles(await this.fileAccess.fromDrop(event));
   }
 
@@ -47,9 +53,9 @@ export class FilesToPdf {
     input.value = '';
   }
 
-  /** Uses the File System Access picker when available (so the result can be saved next to the documents). */
+  /** Uses the File System Access picker when available (so the result can be saved next to the source files). */
   async pickFiles(event: Event) {
-    const picked = await this.fileAccess.pick(event, WORD_TYPES, true);
+    const picked = await this.fileAccess.pick(event, this.config.pickerTypes, true);
     if (picked) this.addFiles(picked);
   }
 
@@ -70,13 +76,13 @@ export class FilesToPdf {
 
     this.inProgress.set(true);
     this.error.set(null);
-    this.toolsService.filesToPdf(files).subscribe({
+    this.toolsService.convertToZip(this.config.endpoint, files).subscribe({
       next: (event: any) => {
         if (event.type === HttpEventType.Response) {
           const blob = event.body;
           if (blob) {
-            // The save dialog opens in the folder of the first document on the list.
-            this.fileAccess.save(blob, 'converted.zip', files[0], ZIP_TYPES);
+            // The save dialog opens in the folder of the first file on the list.
+            this.fileAccess.save(blob, this.config.zipName, files[0], ZIP_TYPES);
           }
           this.inProgress.set(false);
         }
@@ -90,13 +96,13 @@ export class FilesToPdf {
   }
 
   private addFiles(selected: File[]) {
-    const supported = selected.filter((f) => SUPPORTED_EXTENSIONS.includes(this.extension(f.name)));
+    const supported = selected.filter((f) => this.config.extensions.includes(this.extension(f.name)));
     const skipped = selected.filter((f) => !supported.includes(f));
 
     this.files.update((current) => [...current, ...supported]);
     this.error.set(null);
     this.warning.set(skipped.length > 0
-      ? `Skipped (only .doc and .docx are supported): ${skipped.map((f) => f.name).join(', ')}`
+      ? `Skipped (supported: ${this.config.formats}): ${skipped.map((f) => f.name).join(', ')}`
       : null);
   }
 

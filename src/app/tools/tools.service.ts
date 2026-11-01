@@ -47,10 +47,11 @@ export class ToolsService {
     return this.http.request(req);
   }
 
-  filesToPdf(files: File[]): Observable<any> {
+  /** Uploads files to an endpoint that converts each of them to PDF and returns a ZIP. */
+  convertToZip(endpoint: string, files: File[]): Observable<any> {
     const formData: FormData = new FormData();
     files.forEach((file) => formData.append('files', file));
-    const req = new HttpRequest('POST', `${this.apiUrl}files-to-pdf`, formData, {
+    const req = new HttpRequest('POST', `${this.apiUrl}${endpoint}`, formData, {
       reportProgress: true,
       responseType: 'blob'
     });

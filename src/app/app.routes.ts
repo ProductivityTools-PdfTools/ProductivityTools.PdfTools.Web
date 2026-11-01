@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auth/auth.guard';
+import { IMAGE_CONVERSION, WORD_CONVERSION } from './tools/files-to-pdf/conversion-config';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,14 @@ export const routes: Routes = [
     {
         path: 'files-to-pdf',
         loadComponent: () => import('./tools/files-to-pdf/files-to-pdf').then(m => m.FilesToPdf),
+        data: { conversion: WORD_CONVERSION },
+        canActivate: [authGuard]
+    },
+    {
+        // "/images-to-pdf" is used by "Merge Images to PDF" (kept for existing bookmarks).
+        path: 'images-to-pdf-files',
+        loadComponent: () => import('./tools/files-to-pdf/files-to-pdf').then(m => m.FilesToPdf),
+        data: { conversion: IMAGE_CONVERSION },
         canActivate: [authGuard]
     }
 ];
