@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
 import { AuthService } from './auth/auth.service';
+import { SessionBar } from './status/session-bar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLinkWithHref, RouterLinkActive],
+  imports: [RouterOutlet, RouterLinkWithHref, RouterLinkActive, SessionBar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

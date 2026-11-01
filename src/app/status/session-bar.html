@@ -1,0 +1,84 @@
+@if (auth.user(); as user) {
+<div class="session-bar">
+    <!-- Left: user session -->
+    <span class="session-info">
+        <span class="session-dot"></span>
+        Session: <strong>{{ user.email }}</strong>
+    </span>
+
+    <!-- Right: status | token refresh | logout -->
+    <span class="session-right">
+        <button type="button" class="status" [class]="'status status-' + (status.current()?.type ?? 'idle')"
+            (click)="toggleHistory()" title="Click to view debug history">
+            <span class="status-icon">
+                @if (status.current()?.type === 'pending') {
+                <span class="spinner"></span>
+                } @else if (status.current()) {
+                {{ icon(status.current()?.type) }}
+                } @else {
+                <span class="idle-dot"></span>
+                }
+            </span>
+            <span class="status-text">
+                @if (status.current(); as current) {
+                [{{ current.timestamp | date: 'HH:mm:ss' }}] {{ current.message }}
+                @if (current.durationMs != null) { ({{ current.durationMs }}ms) }
+                } @else {
+                Ready
+                }
+            </span>
+        </button>
+
+        <span class="divider"></span>
+
+        <span class="token-info">
+            Token refreshed:
+            <span class="value">{{ auth.tokenRefreshTime() ? (auth.tokenRefreshTime() | date: 'yyyy.MM.dd HH:mm:ss') :
+                'pending...' }}</span>
+        </span>
+        <button type="button" class="icon-button" [class.spinning]="refreshing()" [disabled]="refreshing()"
+            (click)="refreshToken()" title="Force token refresh">&#x27F3;</button>
+
+        <span class="divider"></span>
+
+        <a href="javascript:void(0)" class="logout" (click)="logout()">Logout</a>
+    </span>
+
+    <!-- Debug history popover -->
+    @if (historyOpen()) {
+    <div class="history" role="dialog" aria-label="Debug activity log">
+        <div class="history-header">
+            <span>
+                <span class="history-title">Debug Activity Log</span>
+                <span class="history-count">({{ status.history().length }} {{ status.history().length === 1 ? 'entry' :
+                    'entries' }})</span>
+            </span>
+            <span class="history-actions">
+                @if (status.history().length > 0) {
+                <button type="button" class="icon-button" (click)="status.clearHistory()" title="Clear log">&#x1F5D1;</button>
+                }
+                <button type="button" class="icon-button" (click)="historyOpen.set(false)" title="Close">&#x2715;</button>
+            </span>
+        </div>
+        <div class="history-list">
+            @for (entry of status.history(); track entry.id) {
+            <div class="history-item">
+                <span class="history-main">
+                    <span class="status-icon" [class]="'status-icon status-' + entry.type">
+                        @if (entry.type === 'pending') { <span class="spinner"></span> } @else { {{ icon(entry.type) }} }
+                    </span>
+                    <span class="history-time">{{ entry.timestamp | date: 'HH:mm:ss' }}</span>
+                    <span class="history-message" [class.error-text]="entry.type === 'error'">{{ entry.message }}</span>
+                </span>
+                @if (entry.durationMs != null) {
+                <span class="history-duration">{{ entry.durationMs }}ms</span>
+                }
+            </div>
+            } @empty {
+            <div class="history-empty">No activity recorded yet</div>
+            }
+        </div>
+    </div>
+    }
+</div>
+}

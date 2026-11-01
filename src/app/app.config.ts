@@ -8,6 +8,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { firebaseConfig } from './firebase.config';
 import { authInterceptor } from './auth/auth.interceptor';
+import { statusInterceptor } from './status/status.interceptor';
 import { AuthService } from './auth/auth.service';
 
 export const API_URL = new InjectionToken<string>('API_URL');
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(
       withFetch(),
-      withInterceptors([authInterceptor])
+      withInterceptors([authInterceptor, statusInterceptor])
     ),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),

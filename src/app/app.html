@@ -1,15 +1,4 @@
-@if (authService.user()) {
-<div class="session-bar">
-  <span class="session-info">
-    <span class="session-dot"></span>
-    Session: <strong>{{ authService.user()?.email }}</strong>
-  </span>
-  <span class="session-actions">
-    <span class="user-name">{{ authService.user()?.displayName }}</span>
-    <a href="javascript:void(0)" (click)="logout()">Logout</a>
-  </span>
-</div>
-}
+<app-session-bar />
 
 <header class="top-bar">
   <a class="brand" routerLink="/">PDF Tools</a>
