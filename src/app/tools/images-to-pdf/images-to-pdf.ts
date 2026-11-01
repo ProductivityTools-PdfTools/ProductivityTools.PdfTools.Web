@@ -15,11 +15,9 @@ export class ImagesToPdf {
   inProgress = signal(false);
   error = signal<string | null>(null);
 
-  // Files in the order they were added (independent of the page order on the list).
-  // The output PDF is named after the earliest added file that is still on the list.
-  private addedOrder = signal<File[]>([]);
+  // The output PDF is named after the first image on the list (the first page).
   outputFileName = computed(() => {
-    const first = this.addedOrder()[0];
+    const first = this.files()[0];
     if (!first) return 'images.pdf';
     const dot = first.name.lastIndexOf('.');
     const baseName = dot > 0 ? first.name.substring(0, dot) : first.name;
@@ -31,7 +29,6 @@ export class ImagesToPdf {
     const selected = Array.from(input.files ?? []);
     // Append to the current list so images can be picked in several rounds.
     this.files.update((current) => [...current, ...selected]);
-    this.addedOrder.update((current) => [...current, ...selected]);
     this.error.set(null);
     // Reset the input so the same file can be selected again.
     input.value = '';
@@ -56,14 +53,12 @@ export class ImagesToPdf {
   }
 
   remove(index: number) {
-    const removed = this.files()[index];
     this.files.update((current) => current.filter((_, i) => i !== index));
-    this.addedOrder.update((current) => current.filter((f) => f !== removed));
   }
 
-  clear() {
+  /** Removes all added files and starts over. */
+  reset() {
     this.files.set([]);
-    this.addedOrder.set([]);
     this.error.set(null);
   }
 

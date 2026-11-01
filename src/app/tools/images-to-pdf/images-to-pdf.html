@@ -25,7 +25,6 @@
             </li>
             }
         </ol>
-        <button type="button" class="link-button" (click)="clear()">Clear all</button>
         <p class="output-name">Output file: <strong>{{ outputFileName() }}</strong></p>
     </div>
     }
@@ -34,7 +33,11 @@
     <p class="error">{{ error() }}</p>
     }
 
-    <button class="primary-button" (click)="convert()" [disabled]="files().length === 0 || inProgress()">
-        {{ inProgress() ? 'Converting...' : 'Convert to PDF' }}
-    </button>
+    <div class="actions">
+        <button type="button" class="reset-button" (click)="reset()"
+            [disabled]="files().length === 0 || inProgress()">Reset</button>
+        <button class="primary-button" (click)="convert()" [disabled]="files().length === 0 || inProgress()">
+            {{ inProgress() ? 'Converting...' : 'Convert to PDF' }}
+        </button>
+    </div>
 </div>
