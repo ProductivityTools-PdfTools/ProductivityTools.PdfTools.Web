@@ -1,8 +1,105 @@
 :host {
   display: block;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 24px;
 }
 
-.response {
-  font-size: 1rem;
+.intro {
+  margin-bottom: 24px;
+}
+
+.intro h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.intro p {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+.server-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.75rem !important;
+}
+
+.server-status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #9e9e9e;
+}
+
+.server-status.online .dot {
+  background-color: var(--success-color);
+}
+
+.server-status.offline .dot {
+  background-color: var(--error-color);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Same look as the cards in Journal */
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  color: inherit;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-border);
+}
+
+.feature-card h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.description {
+  flex: 1;
+  font-size: 0.875rem;
   color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 12px;
+  font-size: 0.8125rem;
+  margin-bottom: 12px;
+}
+
+dt {
+  color: var(--text-secondary);
+}
+
+dd {
+  color: var(--text-primary);
+}
+
+.open {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--primary-color);
 }

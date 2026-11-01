@@ -1,8 +1,27 @@
-<div class="tool-card">
-    <h2>Result from Server</h2>
-    <div class="response">
-        {{ name() }}
-        {{ helloworld() }}
-    </div>
+<section class="intro">
+    <h2>PDF Tools</h2>
+    <p>
+        Simple tools for everyday work with PDF files. Choose a tool below or from the menu.
+        In Chrome and Edge the result is saved by default in the folder of the source files.
+    </p>
+    <p class="server-status" [class]="'server-status ' + serverStatus()">
+        <span class="dot"></span>
+        Server: {{ serverStatus() }}
+    </p>
+</section>
 
+<div class="features">
+    @for (feature of features; track feature.link) {
+    <a class="feature-card" [routerLink]="feature.link">
+        <h3>{{ feature.title }}</h3>
+        <p class="description">{{ feature.description }}</p>
+        <dl>
+            <dt>Input</dt>
+            <dd>{{ feature.input }}</dd>
+            <dt>Result</dt>
+            <dd>{{ feature.output }}</dd>
+        </dl>
+        <span class="open">Open &#x2192;</span>
+    </a>
+    }
 </div>
