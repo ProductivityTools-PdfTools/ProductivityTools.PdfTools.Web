@@ -65,3 +65,10 @@
     font-size: 0.875rem;
     margin-bottom: 1rem;
 }
+
+.output-name {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    overflow-wrap: anywhere;
+}

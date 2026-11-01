@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
 import { ToolsService } from '../tools.service';
 
@@ -15,11 +15,23 @@ export class ImagesToPdf {
   inProgress = signal(false);
   error = signal<string | null>(null);
 
+  // Files in the order they were added (independent of the page order on the list).
+  // The output PDF is named after the earliest added file that is still on the list.
+  private addedOrder = signal<File[]>([]);
+  outputFileName = computed(() => {
+    const first = this.addedOrder()[0];
+    if (!first) return 'images.pdf';
+    const dot = first.name.lastIndexOf('.');
+    const baseName = dot > 0 ? first.name.substring(0, dot) : first.name;
+    return `${baseName}.pdf`;
+  });
+
   onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     const selected = Array.from(input.files ?? []);
     // Append to the current list so images can be picked in several rounds.
     this.files.update((current) => [...current, ...selected]);
+    this.addedOrder.update((current) => [...current, ...selected]);
     this.error.set(null);
     // Reset the input so the same file can be selected again.
     input.value = '';
@@ -44,11 +56,14 @@ export class ImagesToPdf {
   }
 
   remove(index: number) {
+    const removed = this.files()[index];
     this.files.update((current) => current.filter((_, i) => i !== index));
+    this.addedOrder.update((current) => current.filter((f) => f !== removed));
   }
 
   clear() {
     this.files.set([]);
+    this.addedOrder.set([]);
     this.error.set(null);
   }
 
@@ -69,7 +84,7 @@ export class ImagesToPdf {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'images.pdf';
+            a.download = this.outputFileName();
             a.click();
             URL.revokeObjectURL(url);
           }
