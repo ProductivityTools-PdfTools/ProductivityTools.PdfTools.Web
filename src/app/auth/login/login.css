@@ -1,20 +1,20 @@
+/* Google sign-in button – same blue as the login button in Journal */
 .google-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    background: white;
-    color: #374151;
-    border: 1px solid #d1d5db;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    background: #4285f4;
 }
 
 .google-btn:hover {
-    background: #f9fafb;
-    opacity: 1;
+    background: #3367d6;
 }
 
 .google-btn img {
     width: 20px;
     height: 20px;
+    padding: 2px;
+    background: #ffffff;
+    border-radius: 2px;
 }

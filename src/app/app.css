@@ -1,46 +1,111 @@
-/* Menu container */
-.menu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0.75rem 2rem;
-    background: var(--surface-color);
-    display: flex;
-    gap: 1rem;
+/* Thin status bar – same as SessionBar in Journal */
+.session-bar {
+    background-color: var(--session-bar-bg);
     border-bottom: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.menu-item a {
-    display: block;
-    color: var(--text-secondary);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-}
-
-.menu-item a:hover {
-    background-color: #f1f5f9;
-    color: var(--text-primary);
-}
-
-.menu-item a.active {
-    background: var(--primary-gradient);
-    color: white;
-    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
-}
-
-.logout-container {
-    margin-left: auto;
+    padding: 2px 16px;
+    min-height: 22px;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #616161;
+}
+
+.session-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.session-info strong {
+    color: #444444;
+}
+
+.session-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--success-color);
+    flex-shrink: 0;
+}
+
+.session-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.session-actions a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.session-actions a:hover {
+    text-decoration: underline;
 }
 
 .user-name {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
+    color: #666666;
+}
+
+/* Sticky header – same as the top bar in Journal */
+.top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+}
+
+.brand {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.5px;
+}
+
+.menu {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Menu links look like MUI outlined small buttons */
+.menu-item a {
+    display: block;
+    padding: 3px 9px;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-border);
+    border-radius: 4px;
+    text-decoration: none;
     font-weight: 500;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.menu-item a:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color);
+}
+
+.menu-item a.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.content {
+    padding: 0 24px 40px;
+    max-width: 1600px;
+    margin: 0 auto;
 }
