@@ -1,0 +1,46 @@
+<div class="tool-card">
+    <div class="tool-header">
+        <h2>Files to PDF</h2>
+        <p>Convert Word documents (.doc, .docx) to PDF. All PDFs are downloaded together in one ZIP file.</p>
+    </div>
+
+    <label class="drop-zone" [class.drag-over]="dragOver()" (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+        <input type="file" multiple hidden (change)="onFilesSelected($event)"
+            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+        <span class="drop-icon">&#x2B07;</span>
+        <span class="drop-title">Drag &amp; drop .doc / .docx files here</span>
+        <span class="drop-hint">or click to choose files</span>
+    </label>
+
+    @if (warning()) {
+    <p class="warning">{{ warning() }}</p>
+    }
+
+    @if (files().length > 0) {
+    <div class="form-group">
+        <label>Files ({{ files().length }})</label>
+        <ul class="file-list">
+            @for (file of files(); track $index; let i = $index) {
+            <li class="file-item">
+                <span class="file-name" [title]="file.name">{{ file.name }}</span>
+                <span class="file-target">&#x2192; {{ file.name.substring(0, file.name.lastIndexOf('.')) }}.pdf</span>
+                <button type="button" class="remove-button" (click)="remove(i)" title="Remove">&#10005;</button>
+            </li>
+            }
+        </ul>
+    </div>
+    }
+
+    @if (error()) {
+    <p class="error">{{ error() }}</p>
+    }
+
+    <div class="actions">
+        <button type="button" class="reset-button" (click)="reset()"
+            [disabled]="files().length === 0 || inProgress()">Reset</button>
+        <button class="primary-button" (click)="convert()" [disabled]="files().length === 0 || inProgress()">
+            {{ inProgress() ? 'Converting...' : 'Convert to PDF (ZIP)' }}
+        </button>
+    </div>
+</div>

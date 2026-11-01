@@ -47,6 +47,16 @@ export class ToolsService {
     return this.http.request(req);
   }
 
+  filesToPdf(files: File[]): Observable<any> {
+    const formData: FormData = new FormData();
+    files.forEach((file) => formData.append('files', file));
+    const req = new HttpRequest('POST', `${this.apiUrl}files-to-pdf`, formData, {
+      reportProgress: true,
+      responseType: 'blob'
+    });
+    return this.http.request(req);
+  }
+
   splitPages(file: File): Observable<any> {
     console.log('this.apiUrl', this.apiUrl);
     const formData: FormData = new FormData();

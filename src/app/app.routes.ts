@@ -30,5 +30,10 @@ export const routes: Routes = [
         path: 'images-to-pdf',
         loadComponent: () => import('./tools/images-to-pdf/images-to-pdf').then(m => m.ImagesToPdf),
         canActivate: [authGuard]
+    },
+    {
+        path: 'files-to-pdf',
+        loadComponent: () => import('./tools/files-to-pdf/files-to-pdf').then(m => m.FilesToPdf),
+        canActivate: [authGuard]
     }
 ];

@@ -1,0 +1,146 @@
+.drop-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 20px;
+    padding: 32px 16px;
+    border: 2px dashed #bdbdbd;
+    border-radius: 8px;
+    background: var(--surface-color);
+    color: var(--text-secondary);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+}
+
+/* Prevent dragleave/dragover flicker when the pointer moves over the texts inside. */
+.drop-zone > * {
+    pointer-events: none;
+}
+
+.drop-icon {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.drop-title {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.drop-hint {
+    font-size: 0.8125rem;
+}
+
+.file-list {
+    list-style: none;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.file-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-target {
+    flex-shrink: 0;
+    max-width: 45%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+/* Small icon button – MUI <IconButton size="small"> */
+.remove-button {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--error-color);
+}
+
+.warning {
+    color: #e65100;
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+.actions .primary-button {
+    flex: 1;
+}
+
+/* Outlined button – MUI <Button variant="outlined"> */
+.reset-button {
+    padding: 7px 21px;
+    background: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-border);
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.reset-button:hover:not(:disabled) {
+    background: var(--primary-light);
+    border-color: var(--primary-color);
+}
+
+.reset-button:disabled {
+    color: rgba(0, 0, 0, 0.26);
+    border-color: rgba(0, 0, 0, 0.12);
+    cursor: not-allowed;
+}
