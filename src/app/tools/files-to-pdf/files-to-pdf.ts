@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ToolsService } from '../tools.service';
-import { FileAccessService, ZIP_TYPES } from '../file-access.service';
+import { FileAccessService, PDF_TYPES, ZIP_TYPES } from '../file-access.service';
 import { ConversionConfig, WORD_CONVERSION } from './conversion-config';
 
 /**
@@ -82,7 +82,13 @@ export class FilesToPdf {
           const blob = event.body;
           if (blob) {
             // The save dialog opens in the folder of the first file on the list.
-            this.fileAccess.save(blob, this.config.zipName, files[0], ZIP_TYPES);
+            // For a single file the API may return the PDF itself instead of a ZIP.
+            const isPdf = (event.headers?.get('Content-Type') ?? '').startsWith('application/pdf');
+            if (isPdf) {
+              this.fileAccess.save(blob, this.pdfName(files[0]), files[0], PDF_TYPES);
+            } else {
+              this.fileAccess.save(blob, this.config.zipName, files[0], ZIP_TYPES);
+            }
           }
           this.inProgress.set(false);
         }
@@ -109,6 +115,12 @@ export class FilesToPdf {
   private extension(name: string): string {
     const dot = name.lastIndexOf('.');
     return dot >= 0 ? name.substring(dot + 1).toLowerCase() : '';
+  }
+
+  /** report.docx -> report.pdf */
+  pdfName(file: File): string {
+    const dot = file.name.lastIndexOf('.');
+    return `${dot > 0 ? file.name.substring(0, dot) : file.name}.pdf`;
   }
 
   /** The API returns a JSON error ({ message: ... }), but with responseType 'blob' it arrives as a Blob. */

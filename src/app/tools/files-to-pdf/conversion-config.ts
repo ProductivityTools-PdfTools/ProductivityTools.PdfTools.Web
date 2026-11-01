@@ -19,17 +19,20 @@ export interface ConversionConfig {
   /** API endpoint relative to API_URL. */
   endpoint: string;
   zipName: string;
+  /** The API returns a plain PDF (not a ZIP) when a single file is converted. */
+  singleFileAsPdf: boolean;
 }
 
 export const WORD_CONVERSION: ConversionConfig = {
   title: 'Files to PDF',
-  description: 'Convert Word documents (.doc, .docx) to PDF. All PDFs are downloaded together in one ZIP file.',
+  description: 'Convert Word documents (.doc, .docx) to PDF. A single document is downloaded as PDF, several documents together in one ZIP file.',
   extensions: ['doc', 'docx'],
   formats: '.doc / .docx',
   accept: '.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   pickerTypes: WORD_TYPES,
   endpoint: 'files-to-pdf',
   zipName: 'converted.zip',
+  singleFileAsPdf: true,
 };
 
 export const IMAGE_CONVERSION: ConversionConfig = {
@@ -41,4 +44,5 @@ export const IMAGE_CONVERSION: ConversionConfig = {
   pickerTypes: IMAGE_TYPES,
   endpoint: 'images-to-pdf-files',
   zipName: 'images.zip',
+  singleFileAsPdf: false,
 };
