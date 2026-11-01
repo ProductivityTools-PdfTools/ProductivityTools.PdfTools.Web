@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { ToolsService } from '../tools.service';
+import { FileAccessService, WORD_TYPES, ZIP_TYPES } from '../file-access.service';
 
 const SUPPORTED_EXTENSIONS = ['doc', 'docx'];
 
@@ -12,6 +13,8 @@ const SUPPORTED_EXTENSIONS = ['doc', 'docx'];
 })
 export class FilesToPdf {
   constructor(private toolsService: ToolsService) { }
+
+  private readonly fileAccess = inject(FileAccessService);
 
   files = signal<File[]>([]);
   dragOver = signal(false);
@@ -30,10 +33,11 @@ export class FilesToPdf {
     this.dragOver.set(false);
   }
 
-  onDrop(event: DragEvent) {
+  async onDrop(event: DragEvent) {
     event.preventDefault();
     this.dragOver.set(false);
-    this.addFiles(Array.from(event.dataTransfer?.files ?? []));
+    // Keeps file handles (Chrome/Edge) so the ZIP can be saved next to the documents.
+    this.addFiles(await this.fileAccess.fromDrop(event));
   }
 
   onFilesSelected(event: Event) {
@@ -41,6 +45,12 @@ export class FilesToPdf {
     this.addFiles(Array.from(input.files ?? []));
     // Reset the input so the same file can be selected again.
     input.value = '';
+  }
+
+  /** Uses the File System Access picker when available (so the result can be saved next to the documents). */
+  async pickFiles(event: Event) {
+    const picked = await this.fileAccess.pick(event, WORD_TYPES, true);
+    if (picked) this.addFiles(picked);
   }
 
   remove(index: number) {
@@ -65,12 +75,8 @@ export class FilesToPdf {
         if (event.type === HttpEventType.Response) {
           const blob = event.body;
           if (blob) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'converted.zip';
-            a.click();
-            URL.revokeObjectURL(url);
+            // The save dialog opens in the folder of the first document on the list.
+            this.fileAccess.save(blob, 'converted.zip', files[0], ZIP_TYPES);
           }
           this.inProgress.set(false);
         }

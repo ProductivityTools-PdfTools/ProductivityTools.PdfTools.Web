@@ -1,6 +1,7 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
 import { ToolsService } from '../tools.service';
+import { FileAccessService, IMAGE_TYPES, PDF_TYPES } from '../file-access.service';
 
 @Component({
   selector: 'app-images-to-pdf',
@@ -10,6 +11,8 @@ import { ToolsService } from '../tools.service';
 })
 export class ImagesToPdf {
   constructor(private toolsService: ToolsService) { }
+
+  private readonly fileAccess = inject(FileAccessService);
 
   files = signal<File[]>([]);
   inProgress = signal(false);
@@ -26,12 +29,21 @@ export class ImagesToPdf {
 
   onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    const selected = Array.from(input.files ?? []);
+    this.addFiles(Array.from(input.files ?? []));
+    // Reset the input so the same file can be selected again.
+    input.value = '';
+  }
+
+  /** Uses the File System Access picker when available (so the result can be saved next to the images). */
+  async pickFiles(event: Event) {
+    const picked = await this.fileAccess.pick(event, IMAGE_TYPES, true);
+    if (picked) this.addFiles(picked);
+  }
+
+  private addFiles(selected: File[]) {
     // Append to the current list so images can be picked in several rounds.
     this.files.update((current) => [...current, ...selected]);
     this.error.set(null);
-    // Reset the input so the same file can be selected again.
-    input.value = '';
   }
 
   moveUp(index: number) {
@@ -76,12 +88,8 @@ export class ImagesToPdf {
         if (event.type === HttpEventType.Response) {
           const blob = event.body;
           if (blob) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = this.outputFileName();
-            a.click();
-            URL.revokeObjectURL(url);
+            // The save dialog opens in the folder of the first image on the list.
+            this.fileAccess.save(blob, this.outputFileName(), files[0], PDF_TYPES);
           }
           this.inProgress.set(false);
         }

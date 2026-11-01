@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ToolsService } from '../tools.service';
+import { FileAccessService, PDF_TYPES } from '../file-access.service';
 
 @Component({
   selector: 'app-merge-odd-even-files',
@@ -10,6 +11,8 @@ import { ToolsService } from '../tools.service';
 export class MergeOddEvenFiles {
   constructor(private toolsService: ToolsService) { }
 
+  private readonly fileAccess = inject(FileAccessService);
+
   file1 = signal<File | null>(null);
   file2 = signal<File | null>(null);
   onFile1Selected(event: any) {
@@ -18,6 +21,17 @@ export class MergeOddEvenFiles {
 
   onFile2Selected(event: any) {
     this.file2.set(event.target.files[0]);
+  }
+
+  /** Uses the File System Access picker when available (so the result can be saved next to the sources). */
+  async pickFile1(event: Event) {
+    const picked = await this.fileAccess.pick(event, PDF_TYPES, false);
+    if (picked?.length) this.file1.set(picked[0]);
+  }
+
+  async pickFile2(event: Event) {
+    const picked = await this.fileAccess.pick(event, PDF_TYPES, false);
+    if (picked?.length) this.file2.set(picked[0]);
   }
 
   mergeFiles() {
@@ -31,12 +45,8 @@ export class MergeOddEvenFiles {
             console.log('Response finished');
             const blob = event.body;
             if (blob) {
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = 'merged.pdf';
-              a.click();
-              URL.revokeObjectURL(url);
+              // The save dialog opens in the folder of the odd pages file.
+              this.fileAccess.save(blob, 'merged.pdf', f1, PDF_TYPES);
             }
           } else {
             console.log('Progress/Other Event:', event);

@@ -6,7 +6,7 @@
 
     <div class="form-group">
         <label for="imageFiles">Select Images (JPG, PNG, GIF, BMP)</label>
-        <input id="imageFiles" type="file" multiple (change)="onFilesSelected($event)"
+        <input id="imageFiles" type="file" multiple (click)="pickFiles($event)" (change)="onFilesSelected($event)"
             accept=".jpg,.jpeg,.png,.gif,.bmp,image/jpeg,image/png,image/gif,image/bmp" />
     </div>
 

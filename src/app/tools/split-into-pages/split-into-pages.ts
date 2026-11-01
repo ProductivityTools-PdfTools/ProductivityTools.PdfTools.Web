@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ToolsService } from '../tools.service';
+import { FileAccessService, PDF_TYPES, ZIP_TYPES } from '../file-access.service';
 
 
 @Component({
@@ -10,10 +11,18 @@ import { ToolsService } from '../tools.service';
 })
 export class SplitIntoPages {
 
+  private readonly fileAccess = inject(FileAccessService);
+
   file = signal<File | null>(null);
 
   onFileSelected(event: any) {
     this.file.set(event.target.files[0]);
+  }
+
+  /** Uses the File System Access picker when available (so the result can be saved next to the source). */
+  async pickFile(event: Event) {
+    const picked = await this.fileAccess.pick(event, PDF_TYPES, false);
+    if (picked?.length) this.file.set(picked[0]);
   }
 
   constructor(private toolsService: ToolsService) { }
@@ -28,13 +37,8 @@ export class SplitIntoPages {
             console.log('Response finished');
             const blob = event.body;
             if (blob) {
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              // Assuming the backend returns a zip file containing the pages
-              a.download = 'split_pages.zip';
-              a.click();
-              URL.revokeObjectURL(url);
+              // The backend returns a zip file containing the pages
+              this.fileAccess.save(blob, 'split_pages.zip', f, ZIP_TYPES);
             }
           } else {
             console.log('Progress/Other Event:', event);
