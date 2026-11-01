@@ -69,11 +69,13 @@ export class Home {
   ];
 
   // Also wakes up the API (Cloud Run scales to zero), so the first conversion is faster.
-  readonly serverStatus = toSignal(
+  readonly serverStatus = toSignal<ServerStatus, ServerStatus>(
     this.homeService.sayHelloWorld().pipe(
-      map(() => 'online' as const),
-      catchError(() => of('offline' as const))
+      map((): ServerStatus => 'online'),
+      catchError(() => of<ServerStatus>('offline'))
     ),
-    { initialValue: 'checking' as const }
+    { initialValue: 'checking' }
   );
 }
+
+type ServerStatus = 'checking' | 'online' | 'offline';
