@@ -7,9 +7,11 @@ export type AcceptTypes = Record<string, string[]>;
 export const PDF_TYPES: AcceptTypes = { 'application/pdf': ['.pdf'] };
 export const ZIP_TYPES: AcceptTypes = { 'application/zip': ['.zip'] };
 export const IMAGE_TYPES: AcceptTypes = { 'image/*': ['.jpg', '.jpeg', '.png', '.gif', '.bmp'] };
-export const WORD_TYPES: AcceptTypes = {
+export const DOCUMENT_TYPES: AcceptTypes = {
   'application/msword': ['.doc'],
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+  'application/vnd.ms-excel': ['.xls'],
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
 };
 
 /**

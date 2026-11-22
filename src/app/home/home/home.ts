@@ -62,8 +62,9 @@ export class Home {
     {
       title: 'Files to PDF',
       link: '/files-to-pdf',
-      description: 'Converts Word documents to PDF, keeping their names (report.docx → report.pdf). Supports drag & drop.',
-      input: 'DOC, DOCX',
+      description:
+        'Converts Word and Excel files to PDF, keeping their names (report.docx → report.pdf, budget.xlsx → budget.pdf). Supports drag & drop.',
+      input: 'DOC, DOCX, XLS, XLSX',
       output: 'PDF (one file) or ZIP (several files)',
     },
   ];

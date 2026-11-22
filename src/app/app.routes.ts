@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auth/auth.guard';
-import { IMAGE_CONVERSION, WORD_CONVERSION } from './tools/files-to-pdf/conversion-config';
+import { DOCUMENT_CONVERSION, IMAGE_CONVERSION } from './tools/files-to-pdf/conversion-config';
 
 export const routes: Routes = [
     {
@@ -35,7 +35,7 @@ export const routes: Routes = [
     {
         path: 'files-to-pdf',
         loadComponent: () => import('./tools/files-to-pdf/files-to-pdf').then(m => m.FilesToPdf),
-        data: { conversion: WORD_CONVERSION },
+        data: { conversion: DOCUMENT_CONVERSION },
         canActivate: [authGuard]
     },
     {

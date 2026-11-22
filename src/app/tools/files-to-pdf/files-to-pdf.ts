@@ -3,11 +3,11 @@ import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ToolsService } from '../tools.service';
 import { FileAccessService, PDF_TYPES, ZIP_TYPES } from '../file-access.service';
-import { ConversionConfig, WORD_CONVERSION } from './conversion-config';
+import { ConversionConfig, DOCUMENT_CONVERSION } from './conversion-config';
 
 /**
  * Converts every dropped/selected file to its own PDF and downloads them as a ZIP.
- * Used by "Files to PDF" (Word) and "Images to PDF" – see conversion-config.ts.
+ * Used by "Files to PDF" (Word/Excel) and "Images to PDF" – see conversion-config.ts.
  */
 @Component({
   selector: 'app-files-to-pdf',
@@ -20,7 +20,7 @@ export class FilesToPdf {
 
   private readonly fileAccess = inject(FileAccessService);
 
-  readonly config: ConversionConfig = inject(ActivatedRoute).snapshot.data['conversion'] ?? WORD_CONVERSION;
+  readonly config: ConversionConfig = inject(ActivatedRoute).snapshot.data['conversion'] ?? DOCUMENT_CONVERSION;
 
   files = signal<File[]>([]);
   dragOver = signal(false);

@@ -1,9 +1,9 @@
-import { AcceptTypes, IMAGE_TYPES, WORD_TYPES } from '../file-access.service';
+import { AcceptTypes, DOCUMENT_TYPES, IMAGE_TYPES } from '../file-access.service';
 
 /**
  * Settings of a "convert every file to its own PDF and download a ZIP" tool.
  * The FilesToPdf component is reused for several such tools via route data:
- *   { path: '...', loadComponent: ..., data: { conversion: WORD_CONVERSION } }
+ *   { path: '...', loadComponent: ..., data: { conversion: DOCUMENT_CONVERSION } }
  */
 export interface ConversionConfig {
   title: string;
@@ -23,13 +23,15 @@ export interface ConversionConfig {
   singleFileAsPdf: boolean;
 }
 
-export const WORD_CONVERSION: ConversionConfig = {
+export const DOCUMENT_CONVERSION: ConversionConfig = {
   title: 'Files to PDF',
-  description: 'Convert Word documents (.doc, .docx) to PDF. A single document is downloaded as PDF, several documents together in one ZIP file.',
-  extensions: ['doc', 'docx'],
-  formats: '.doc / .docx',
-  accept: '.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  pickerTypes: WORD_TYPES,
+  description:
+    'Convert Word (.doc, .docx) and Excel (.xls, .xlsx) files to PDF. A single file is downloaded as PDF, several files together in one ZIP file.',
+  extensions: ['doc', 'docx', 'xls', 'xlsx'],
+  formats: '.doc / .docx / .xls / .xlsx',
+  accept:
+    '.doc,.docx,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  pickerTypes: DOCUMENT_TYPES,
   endpoint: 'files-to-pdf',
   zipName: 'converted.zip',
   singleFileAsPdf: true,
