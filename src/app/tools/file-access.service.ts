@@ -10,6 +10,7 @@ export const IMAGE_TYPES: AcceptTypes = { 'image/*': ['.jpg', '.jpeg', '.png', '
 export const DOCUMENT_TYPES: AcceptTypes = {
   'application/msword': ['.doc'],
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+  'application/vnd.ms-word.document.macroenabled.12': ['.docm'],
   'application/vnd.ms-excel': ['.xls'],
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
 };
