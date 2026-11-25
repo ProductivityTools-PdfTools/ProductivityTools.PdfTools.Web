@@ -63,8 +63,8 @@ export class Home {
       title: 'Files to PDF',
       link: '/files-to-pdf',
       description:
-        'Converts Word and Excel files to PDF, keeping their names (report.docx → report.pdf, budget.xlsx → budget.pdf). Macros are ignored. Supports drag & drop.',
-      input: 'DOC, DOCX, DOCM, XLS, XLSX',
+        'Converts Word, Excel and PowerPoint files to PDF, keeping their names (report.docx → report.pdf, slides.pptx → slides.pdf). Macros are ignored. Supports drag & drop.',
+      input: 'DOC, DOCX, DOCM, XLS, XLSX, PPTX',
       output: 'PDF (one file) or ZIP (several files)',
     },
   ];

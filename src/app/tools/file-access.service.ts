@@ -13,6 +13,7 @@ export const DOCUMENT_TYPES: AcceptTypes = {
   'application/vnd.ms-word.document.macroenabled.12': ['.docm'],
   'application/vnd.ms-excel': ['.xls'],
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['.pptx'],
 };
 
 /**

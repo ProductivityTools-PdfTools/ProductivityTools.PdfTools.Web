@@ -26,11 +26,11 @@ export interface ConversionConfig {
 export const DOCUMENT_CONVERSION: ConversionConfig = {
   title: 'Files to PDF',
   description:
-    'Convert Word (.doc, .docx, .docm) and Excel (.xls, .xlsx) files to PDF (macros are ignored). A single file is downloaded as PDF, several files together in one ZIP file.',
-  extensions: ['doc', 'docx', 'docm', 'xls', 'xlsx'],
-  formats: '.doc / .docx / .docm / .xls / .xlsx',
+    'Convert Word (.doc, .docx, .docm), Excel (.xls, .xlsx) and PowerPoint (.pptx) files to PDF (macros are ignored). A single file is downloaded as PDF, several files together in one ZIP file.',
+  extensions: ['doc', 'docx', 'docm', 'xls', 'xlsx', 'pptx'],
+  formats: '.doc / .docx / .docm / .xls / .xlsx / .pptx',
   accept:
-    '.doc,.docx,.docm,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    '.doc,.docx,.docm,.xls,.xlsx,.pptx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation',
   pickerTypes: DOCUMENT_TYPES,
   endpoint: 'files-to-pdf',
   zipName: 'converted.zip',

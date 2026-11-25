@@ -7,7 +7,7 @@ import { ConversionConfig, DOCUMENT_CONVERSION } from './conversion-config';
 
 /**
  * Converts every dropped/selected file to its own PDF and downloads them as a ZIP.
- * Used by "Files to PDF" (Word/Excel) and "Images to PDF" – see conversion-config.ts.
+ * Used by "Files to PDF" (Word/Excel/PowerPoint) and "Images to PDF" – see conversion-config.ts.
  */
 @Component({
   selector: 'app-files-to-pdf',

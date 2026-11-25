@@ -44,17 +44,18 @@ describe('FilesToPdf', () => {
     component.onFilesSelected({ target: input } as unknown as Event);
   }
 
-  it('accepts Word (.doc, .docx, .docm) and Excel (.xls, .xlsx) files and skips unsupported ones', () => {
+  it('accepts Word (.doc, .docx, .docm), Excel (.xls, .xlsx) and PowerPoint (.pptx) files and skips unsupported ones', () => {
     const doc = new File(['a'], 'umowa.doc');
     const docx = new File(['b'], 'raport.docx');
     const docm = new File(['m'], 'szablon.docm');
     const xls = new File(['c'], 'kosztorys.xls');
     const xlsx = new File(['d'], 'BUDZET.XLSX');
+    const pptx = new File(['p'], 'prezentacja.pptx');
     const txt = new File(['e'], 'notes.txt');
 
-    selectFiles([doc, docx, docm, xls, xlsx, txt]);
+    selectFiles([doc, docx, docm, xls, xlsx, pptx, txt]);
 
-    expect(component.files()).toEqual([doc, docx, docm, xls, xlsx]);
+    expect(component.files()).toEqual([doc, docx, docm, xls, xlsx, pptx]);
     expect(component.warning()).toContain('notes.txt');
   });
 
